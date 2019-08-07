@@ -1,0 +1,34 @@
+extends layout
+
+block content
+	h1= title
+	form#uploadForm(ref='uploadForm', action='http://localhost:3000/upload', method='post', enctype='multipart/form-data')
+		div.form-group
+			label(for="sampleFile")
+					input.form-control-file(type='file', id='sampleFile', name='sampleFile')
+					input(type='submit', value='Upload!')
+
+	#status
+		if fileUploaded != null
+			p file is uploaded #{fileUploaded}
+
+	.container
+		.row
+			.col-3
+				| Player Name
+			.col-3
+				| {player name here}
+			.col-3
+				| 3 of 3
+			.col-3
+				| 4 of 4
+		.row
+			.col
+				| Faction
+			.col-5
+				| faction
+			.col
+				| 3 of 3
+
+	script(language='javascript' src='/js/ready.js')
+	script(language='javascript' src='/js/async_upload.js')
