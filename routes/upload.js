@@ -5,7 +5,7 @@ var multer  = require('multer')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.json({ title: 'Express' });
 });
 
 const storage = multer.diskStorage({
@@ -19,17 +19,16 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 let fileUploaded = false;
 
-router.post('/upload', upload.single('sampleFile'), function(req,res,next) {
-	
+router.post('/', upload.single('fileInput'), function(req, res, next) {
 	fileUploaded = true;
 	
 	const fs = require("fs");
 	
-	fs.stat("exists",req.file.path, (err,stats) => {
-		if(err) console.log("err",err);
-		console.log("stats",stats);
-		
-	})
+	// fs.stat("exists",req.file.path, (err,stats) => {
+	// 	if(err) console.log("err",err);
+	// 	console.log("stats",stats);
+	//
+	// })
 	
 	fs.readFile(req.file.path,'utf8', function (err, data) {
 		if (err) {
@@ -38,6 +37,7 @@ router.post('/upload', upload.single('sampleFile'), function(req,res,next) {
 		}
 		const parser = require('node-html-parser');
 		
+		console.log("data",data);
 		const parsedHTML = parser.parse(data);
 		const forceRaw = parsedHTML.querySelector('.force h2').toString();
 		const faction =  forceRaw.match(/<h2>Kill Team List \((.+?)\)/)[1];

@@ -10,14 +10,14 @@ var path = require('path');
 
 
 
-var indexRouter = require('./routes/index');
+var uploadRouter = require('./routes/upload');
 var usersRouter = require('./routes/users');
 
 var app = express();
 
 app.locals.appDir = path.dirname(require.main.filename);
 
-// view engine setup
+//view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
@@ -27,12 +27,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/node_modules", express.static(path.join(__dirname, 'node_modules')));
-// app.use("/jquery", express.static(path.join(__dirname, '/node_modules/jquery-slim/dist')));
 
-// app.use(fileUpload());
+//create a cors middleware
+app.use(function(req, res, next) {
+//set headers to allow cross origin request.
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+});
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api/upload', uploadRouter);
+app.use('/api/users', usersRouter);
 reload(app);
 
 
