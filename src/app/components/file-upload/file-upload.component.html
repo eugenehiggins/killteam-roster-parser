@@ -1,0 +1,19 @@
+<h1></h1>
+<form id="uploadForm" ref="uploadForm" [formGroup]="uploadForm" action="http://localhost:3000/api/upload" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="fileInput">
+            <input class="form-control-file"
+                   formControlName="theFile"
+                   type="file"
+                   [multiple]="true"
+                   (change)="upLoadFiles($event) ; fileInput.value = null"
+                   id="fileInput"
+                   name="fileInput"
+                   #fileInput
+                />
+            <input type="submit" value="Upload!"/>
+        </label>
+    </div>
+</form>
+
+<div id="status">{{ statusText }}</div>
