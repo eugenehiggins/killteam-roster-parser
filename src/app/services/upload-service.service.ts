@@ -1,15 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { ParseHtmlService } from "./parse-html.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+      private httpClient: HttpClient,
+      private parseHtml: ParseHtmlService ) { }
 
 public uploadFile(fileToUpload: File) {
-    console.log('huh',fileToUpload);
+    // console.log('huh',fileToUpload);
+    let fileContents;
+    let fileReader = new FileReader();
+    fileReader.onload = (e) => {
+        fileContents = fileReader.result;
+        this.parseHtml.data = fileContents;
+    }
+    fileReader.readAsText(fileToUpload);
 
     const httpOptions = {
         headers: new HttpHeaders(

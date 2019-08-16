@@ -7,11 +7,13 @@ import { AppComponent } from './app.component';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { UploadService } from "./services/upload-service.service";
 import { HttpClientModule } from "@angular/common/http";
+import { CommandRosterComponent } from './components/command-roster/command-roster.component';
 
 @NgModule({
     declarations: [
         AppComponent,
-        FileUploadComponent
+        FileUploadComponent,
+        CommandRosterComponent
     ],
     imports: [
         BrowserModule,
